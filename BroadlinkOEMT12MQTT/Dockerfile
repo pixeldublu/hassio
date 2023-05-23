@@ -24,10 +24,6 @@ apk add --update \
     build-base && \
  echo "**** install pip packages ****" && \
  pip install --upgrade pip \
- pip install --no-cache-dir -U \
-	paho-mqtt \
-	pyyaml \
-	pycrypto && \
  echo "**** Install app ****" && \
  mkdir -p /app/ac2mqtt && \
  echo "Created App folder in /app/ac2mqtt" && \
@@ -40,7 +36,8 @@ apk add --update \
  tar xf \
  /tmp/ac2mqtt.tar.gz -C \
 	/app/ac2mqtt --strip-components=1 && \
-cd /app/ac2mqtt && pip install -r requirements.txt && \
+echo "**** install dependencies ****" && \
+pip install  --no-cache-dir -U -r /app/ac2mqtt/requirements.txt && \
  rm -rf \
 	/root/.cache \
 	/tmp/*
