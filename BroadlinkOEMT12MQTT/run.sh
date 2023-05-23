@@ -17,7 +17,7 @@ cat > /config/config.yml << EOL
 service:
     daemon_mode: True
     update_interval: 10
-    self_discovery: False
+    self_discovery: True
     bind_to_ip: False
 
 mqtt:
