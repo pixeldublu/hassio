@@ -16,14 +16,19 @@ RUN \
 	gcc \
 	curl \
 	make \
+	cargo \
+	pkgconfig \
 	jq && \
 apk add --update \
+	libcrypto1.1=1.1.1o-r0 \ 
+	libssl1.1=1.1.1o-r0 \
     python3 \
     python3-dev \
     py3-pip \
-    build-base && \
- echo "**** install pip packages ****" && \
- pip install --upgrade pip \
+    build-base \
+    libffi-dev \
+    openssl-dev && \
+	curl -proto '=https' -tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && \
  echo "**** Install app ****" && \
  mkdir -p /app/ac2mqtt && \
  echo "Created App folder in /app/ac2mqtt" && \
@@ -37,7 +42,14 @@ apk add --update \
  /tmp/ac2mqtt.tar.gz -C \
 	/app/ac2mqtt --strip-components=1 && \
 echo "**** install dependencies ****" && \
-pip install  --no-cache-dir -U -r /app/ac2mqtt/requirements.txt && \
+export CRYPTOGRAPHY_DONT_BUILD_RUST=1 && \
+ pip install --upgrade pip setuptools wheel \
+ pip install --no-cache-dir -U --no-binary :all: \
+	cryptography==38.0.4 \
+	cffi==1.15.1 \
+	paho-mqtt==1.6.1 \
+	pycparser==2.21 \
+	PyYAML==6.0 && \
  rm -rf \
 	/root/.cache \
 	/tmp/*
