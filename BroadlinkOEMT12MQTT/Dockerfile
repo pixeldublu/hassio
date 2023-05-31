@@ -5,9 +5,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV LANG C.UTF-8
 
-RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN echo "@community http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-RUN apk update
+RUN apk add --no-cache ca-certificates wget \
+    && wget -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+
+
+RUN echo "@testing https://nl.alpinelinux.org/alpine/3.12/testing" >> /etc/apk/repositories
+RUN echo "@community https://nl.alpinelinux.org/alpine/3.12/community" >> /etc/apk/repositories
+RUN apk upgrade -Ua
 
 RUN \
  echo "**** install packages ****" && \
