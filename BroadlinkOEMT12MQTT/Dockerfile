@@ -23,7 +23,7 @@ RUN \
 	cargo \
 	pkgconfig \
 	jq && \
-apk add --update \
+apk add --allow-downgrade \
 	libcrypto1.1=1.1.1o-r0 \ 
 	libssl1.1=1.1.1o-r0 \
     python3 \
