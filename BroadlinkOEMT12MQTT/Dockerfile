@@ -5,17 +5,15 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ENV LANG C.UTF-8
 
-RUN apk add --no-cache ca-certificates wget \
-    && wget -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 
 
-RUN echo "@testing https://nl.alpinelinux.org/alpine/3.12/testing" >> /etc/apk/repositories
-RUN echo "@community https://nl.alpinelinux.org/alpine/3.12/community" >> /etc/apk/repositories
-RUN apk upgrade -Ua
+RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN echo "@community http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
+    ca-certificates \
 	g++ \
 	gcc \
 	curl \
@@ -23,7 +21,7 @@ RUN \
 	cargo \
 	pkgconfig \
 	jq && \
-apk add \
+apk add --no-cache \
 	libcrypto1.1=1.1.1o-r0 \ 
 	libssl1.1=1.1.1o-r0 \
     python3 \
