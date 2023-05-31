@@ -21,6 +21,7 @@ RUN \
 	cargo \
 	pkgconfig \
 	jq && \
+apk upgrade && \		
 apk add --no-cache \
 	libcrypto1.1=1.1.1o-r0 \ 
 	libssl1.1=1.1.1o-r0 \
