@@ -1,6 +1,6 @@
 {
     "name": "Broadlink OEM T1 2 MQTT",
-    "version": "1.3.9",
+    "version": "1.3.10",
     "slug": "broadlinkoemt1",
     "description": "BroadlinkOEMT1 2 MQTT",
     "startup": "before",

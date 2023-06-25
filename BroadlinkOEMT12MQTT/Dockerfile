@@ -23,8 +23,8 @@ RUN \
 	jq && \
 apk upgrade && \		
 apk add --no-cache \
-	libcrypto1.1=1.1.1o-r0 \ 
-	libssl1.1=1.1.1o-r0 \
+    libcrypto1.1=1.1.1v-r0 \ 
+    libssl1.1=1.1.1v-r0 \
     python3 \
     python3-dev \
     py3-pip \
