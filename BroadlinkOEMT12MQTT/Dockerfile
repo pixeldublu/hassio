@@ -7,8 +7,9 @@ ENV LANG C.UTF-8
 
 
 
-RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN echo "@community http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+# RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+# RUN echo "@main http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
+
 
 RUN \
  echo "**** install packages ****" && \
@@ -19,19 +20,22 @@ RUN \
 	curl \
 	make \
 	cargo \
+	musl-dev \
 	pkgconfig \
 	jq && \
-apk upgrade && \		
-apk add --no-cache \
-    libcrypto1.1=1.1.1u-r1 \ 
-    libssl1.1=1.1.1u-r1 \
+apk upgrade && \	
+apk add --force --no-cache \
     python3 \
     python3-dev \
     py3-pip \
     build-base \
     libffi-dev \
-    openssl-dev && \
-	curl -proto '=https' -tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && \
+	cargo \
+    libcrypto3 \
+    libssl3 \
+	libressl \
+    libressl-dev && \
+	curl https://sh.rustup.rs -sSf | sh -s -- -y && source $HOME/.cargo/env && \
  echo "**** Install app ****" && \
  mkdir -p /app/ac2mqtt && \
  echo "Created App folder in /app/ac2mqtt" && \
@@ -45,7 +49,7 @@ apk add --no-cache \
  /tmp/ac2mqtt.tar.gz -C \
 	/app/ac2mqtt --strip-components=1 && \
 echo "**** install dependencies ****" && \
-export CRYPTOGRAPHY_DONT_BUILD_RUST=1 && \
+# export CRYPTOGRAPHY_DONT_BUILD_RUST=1 && \
  pip install --upgrade pip setuptools wheel \
  pip install --no-cache-dir -U --no-binary :all: \
 	cryptography==38.0.4 \
